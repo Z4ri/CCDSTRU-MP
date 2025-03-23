@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "mp-functions.h": "c",
+        "stdbool.h": "c"
+    }
+}
