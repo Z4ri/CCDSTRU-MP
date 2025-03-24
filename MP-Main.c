@@ -12,7 +12,7 @@ int main(void) {
     
     // Uno is represented by 'U' and Tres by 'T'
     // Dos is used only for tie, represented by 'D' when the board is full.
-    char currentPlayer = 'U';
+    char currentPlayer = 'T';
     
     // Seed the random number generator
     srand((unsigned int)time(NULL));
