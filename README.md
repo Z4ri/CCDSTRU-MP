@@ -1,3 +1,3 @@
 # CCDSTRU-MP
 
-Use gcc -Wall -std=c99 MP-Main.c MP-Functions.c -o MP_Game to compile files
+Use gcc -Wall -std=c99 MP-Main.c -o MP-Main to compile files

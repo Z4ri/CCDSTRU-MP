@@ -7,7 +7,7 @@
 
 void displayMenu() {
     printf("=====================================\n");
-    printf("         Welcome to Tres & Uno       \n");
+    printf("            Welcome to Zed           \n");
     printf("=====================================\n");
     printf("1. Start Game\n");
     printf("2. How to play?\n");
