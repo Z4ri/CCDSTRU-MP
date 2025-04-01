@@ -59,7 +59,7 @@ int main(void) {
             else if (winner == 'D')
                 printf("Game over: Dos wins (tie)!\n");
             gameOver = true;
-            break;
+            break;    // This breaks the game loop, thus ending the game.
         }
         
         // Switch player for next turn
