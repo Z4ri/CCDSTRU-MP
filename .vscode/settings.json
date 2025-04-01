@@ -2,6 +2,8 @@
     "files.associations": {
         "stdlib.h": "c",
         "mp-functions.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "time.h": "c",
+        "stdio.h": "c"
     }
 }

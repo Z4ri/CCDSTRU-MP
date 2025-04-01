@@ -4,6 +4,127 @@
 #include <stdbool.h>
 #include "MP-Functions.h"
 
+
+void displayMenu() {
+    printf("=====================================\n");
+    printf("         Welcome to Tres & Uno       \n");
+    printf("=====================================\n");
+    printf("1. Start Game\n");
+    printf("2. How to play?\n");
+    printf("3. Exit\n");
+    printf("=====================================\n");
+    printf("Enter your choice: ");
+}
+
+void displayInstructions() {
+    printf("Instructions:\n");
+    printf("1. Players take turns placing their marks on the board.\n");
+    printf("2. Tres is represented by 'T' and Uno by 'U'.\n");
+    printf("3. After Uno's turn, a random occupied tile will be cleared.\n");
+    printf("4. The game ends when one player wins or if there is a tie.\n");
+    printf("5. Enjoy the game!\n\n");
+
+    // Top Row win scenario
+    printf("Winning Pattern a) Top Row win:\n");
+    printf("     1   2   3   4\n");
+    printf(" 1   X | X | X | X\n");
+    printf("    ---+---+---+---\n");
+    printf(" 2     |   |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 3     |   |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 4     |   |   |  \n\n");
+
+    // Anti-Diagonal win scenario
+    printf("Winning Pattern b) Anti-Diagonal win:\n");
+    printf("     1   2   3   4\n");
+    printf(" 1     |   |   | X\n");
+    printf("    ---+---+---+---\n");
+    printf(" 2     |   | X |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 3     | X |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 4   X |   |   |  \n\n");
+
+    // Bottom Row win scenario
+    printf("Winning Pattern c) Bottom Row win:\n");
+    printf("     1   2   3   4\n");
+    printf(" 1     |   |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 2     |   |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 3     |   |   |  \n");
+    printf("    ---+---+---+---\n");
+    printf(" 4   X | X | X | X\n\n");
+}
+
+void mainGame() {
+
+	char board[SIZE][SIZE];
+	int row, col;
+	bool gameOver;
+	char winner;
+
+	// Tres is represented by 'T' and Uno by 'U'
+	// Dos is used only for tie, represented by 'D' when the board is full.
+	char currentPlayer = 'T'; // Start with Tres
+
+	// Seed the random number generator
+	srand((unsigned int)time(NULL));
+	
+	// Initialize the board
+	initializeBoard(board);
+	gameOver = false;
+	winner = ' ';
+
+	// Main game loop
+	while (!gameOver) {
+		printBoard(board);
+		printf("Current Player: %s\n", (currentPlayer == 'U') ? "Uno (U)" : "Tres (T)");
+		printf("Enter row [1-4] and column [1-4] separated by a space: ");
+
+		if (scanf("%d %d", &row, &col) != 2) {
+			printf("Invalid input. Exiting...\n");
+			return;
+		}
+
+		// Validate input range
+		if (row < 1 || row > 4 || col < 1 || col > 4) {
+			printf("Coordinates out of range. Try again.\n");
+			continue;
+		}
+
+		// Attempt to place the mark
+		if (!placeMark(board, row - 1, col - 1, currentPlayer)) {
+			printf("That cell is already occupied. Try again.\n");
+			continue;
+		}
+
+		// Only clear a random tile after Uno's turn
+		if (currentPlayer == 'U') {
+			clearRandomOccupiedTile(board);
+		}
+
+		// Check for winner or tie
+		winner = checkWinner(board);
+		if (winner != ' ') {
+			printBoard(board);
+			if (winner == 'U')
+				printf("Player Uno (U) wins!\n");
+			else if (winner == 'T')
+				printf("Player Tres (T) wins!\n");
+			else if (winner == 'D')
+				printf("Game over: Dos wins (tie)!\n");
+			gameOver = true;
+		} else {
+			// Switch player for next turn
+			currentPlayer = (currentPlayer == 'U') ? 'T' : 'U';
+		}
+	}
+	// After the game ends, automatically return to the main menu
+	printf("\nReturning to the main menu...\n\n");
+}
+
 // Initialize the 4x4 board with spaces
 void initializeBoard(char board[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
